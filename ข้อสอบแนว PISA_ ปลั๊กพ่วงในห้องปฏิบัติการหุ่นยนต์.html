@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ข้อสอบแนว PISA: ปลั๊กพ่วงในห้องปฏิบัติการหุ่นยนต์</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mut:#5b6478;--ac:#2456d6;--bd:#dde1ec;--ok:#157a43;--okbg:#e4f5ea;--no:#b42318;--nobg:#fdeaea;--hl:#fff6d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1b2029;--tx:#e8ebf2;--mut:#a0a8ba;--ac:#7aa2ff;--bd:#2d3443;--ok:#6fd39a;--okbg:#17301f;--no:#ff8a80;--nobg:#3a1a1a;--hl:#3a331a}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1b2029;--tx:#e8ebf2;--mut:#a0a8ba;--ac:#7aa2ff;--bd:#2d3443;--ok:#6fd39a;--okbg:#17301f;--no:#ff8a80;--nobg:#3a1a1a;--hl:#3a331a}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans Thai",system-ui,sans-serif;line-height:1.7}
+.wrap{max-width:820px;margin:0 auto;padding:16px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--bd);padding:8px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+.timer{font-weight:700;color:var(--ac);font-variant-numeric:tabular-nums}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin:14px 0}
+h1{font-size:1.4rem;margin:.2em 0}h2{font-size:1.1rem;margin:0 0 .4em}
+.tag{display:inline-block;font-size:.78rem;background:var(--hl);border-radius:99px;padding:1px 10px;margin:0 6px 4px 0;color:var(--tx)}
+.mut{color:var(--mut);font-size:.9rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:380px}
+th,td{border:1px solid var(--bd);padding:6px 10px;text-align:left}
+th{background:var(--hl)}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}
+.row{display:flex;gap:8px}.row>*{flex:1}
+label.opt{display:block;border:1px solid var(--bd);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer}
+label.opt:has(input:checked){border-color:var(--ac);background:var(--hl)}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 20px;background:var(--ac);color:#fff;cursor:pointer}
+button.sec{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.95rem}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--nobg);color:var(--no)}.fb.info{background:var(--hl)}
+.score{font-size:2rem;font-weight:700;color:var(--ac)}
+svg{max-width:100%;height:auto}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header class="top"><strong>ข้อสอบ Unit: ไฟฟ้าเบื้องต้น</strong><span class="timer" id="timer">30:00</span></header>
+<div class="wrap">
+
+<section class="card" id="intro">
+  <h1>ปลั๊กพ่วงในห้องปฏิบัติการหุ่นยนต์</h1>
+  <span class="tag">AI Engineering ม.4 ภาคเรียนที่ 1</span><span class="tag">แนว PISA 1 Unit</span><span class="tag">5 ข้อ · 9 คะแนน · 30 นาที</span>
+  <p class="mut">สมรรถนะ: Problem Solving · Computational Thinking · การใช้เทคโนโลยีอย่างปลอดภัย</p>
+  <div class="row"><div><label class="mut">ชื่อ-สกุล</label><input type="text" id="nm"></div><div><label class="mut">เลขที่ / ห้อง</label><input type="text" id="no"></div></div>
+  <p><button id="start">เริ่มทำข้อสอบ</button></p>
+</section>
+
+<div id="exam" class="hide">
+<section class="card">
+  <h2>สถานการณ์</h2>
+  <p>ห้องปฏิบัติการหุ่นยนต์ของโรงเรียนใช้ไฟบ้าน <b>220 V</b> นักเรียนกลุ่มหนึ่งเสียบอุปกรณ์ทั้งหมดในปลั๊กพ่วงตัวเดียว ซึ่งมี <b>ฟิวส์ 5 A</b> ก่อนเริ่มงาน ครูให้ทีมตรวจสอบว่าการใช้งานปลอดภัยหรือไม่ และให้ทดสอบวงจรเล็ก ๆ บนเบรดบอร์ดด้วยมัลติมิเตอร์</p>
+  <div class="scroll"><table>
+    <tr><th>อุปกรณ์บนปลั๊กพ่วง</th><th>กำลังไฟฟ้า</th><th>จำนวน</th></tr>
+    <tr><td>คอมพิวเตอร์</td><td>110 W</td><td>1</td></tr>
+    <tr><td>จอภาพ</td><td>30 W</td><td>1</td></tr>
+    <tr><td>เครื่องบัดกรี</td><td>60 W</td><td>1</td></tr>
+    <tr><td>ที่ชาร์จแบตเตอรี่หุ่นยนต์</td><td>40 W</td><td>1</td></tr>
+  </table></div>
+  <p class="mut">ข้อมูลจำลองเพื่อการเรียนการสอน ไม่ใช่ข้อมูลจากอุปกรณ์จริง</p>
+  <svg viewBox="0 0 420 110" role="img" aria-label="วงจรอนุกรม แบตเตอรี่ 9 V ต่อกับ R1 100 โอห์ม และ R2 200 โอห์ม">
+    <g fill="none" stroke="currentColor" stroke-width="2"><path d="M40 20H130M190 20H250M310 20H380V90H40V60M40 40V20"/><rect x="130" y="8" width="60" height="24"/><rect x="250" y="8" width="60" height="24"/><path d="M28 40H52M34 52H46"/></g>
+    <g fill="currentColor" font-size="13" text-anchor="middle"><text x="160" y="50">R1 = 100 Ω</text><text x="280" y="50">R2 = 200 Ω</text><text x="14" y="52">9 V</text><text x="210" y="105">วงจรอนุกรมบนเบรดบอร์ด</text></g>
+  </svg>
+</section>
+
+<section class="card" id="q1">
+  <h2>ข้อ 1 · คำนวณจากข้อมูล (2 คะแนน)</h2>
+  <p>เมื่อเปิดอุปกรณ์ทั้งหมดพร้อมกัน กระแสไฟฟ้ารวมที่ไหลผ่านปลั๊กพ่วงประมาณกี่แอมแปร์? (ใช้ P = IV, ตอบทศนิยม 2 ตำแหน่ง)</p>
+  <input type="number" step="0.01" id="a1" placeholder="กระแส (A)">
+  <div class="fb info hide" id="f1"></div>
+</section>
+
+<section class="card" id="q2">
+  <h2>ข้อ 2 · ประเมินข้อกล่าวอ้าง (1 คะแนน)</h2>
+  <p>นักเรียน ก. กล่าวว่า “กระแสรวมต่ำกว่า 5 A มาก ดังนั้นจะเสียบอุปกรณ์เพิ่มอีกกี่ชิ้นก็ปลอดภัย” ข้อใดประเมินคำกล่าวนี้ได้ถูกต้องที่สุด</p>
+  <label class="opt"><input type="radio" name="q2" value="A"> ถูกต้อง เพราะ 1.09 A น้อยกว่า 5 A</label>
+  <label class="opt"><input type="radio" name="q2" value="B"> ไม่ถูกต้อง เพราะฟิวส์ 5 A ที่ 220 V รับกำลังรวมได้ประมาณ 1,100 W หากเพิ่มอุปกรณ์จนเกินค่านี้ ฟิวส์จะขาด</label>
+  <label class="opt"><input type="radio" name="q2" value="C"> ไม่ถูกต้อง เพราะฟิวส์ยิ่งมีค่าแอมแปร์สูงยิ่งปลอดภัยเสมอ</label>
+  <label class="opt"><input type="radio" name="q2" value="D"> ถูกต้อง เพราะมีสายดินอยู่แล้ว จึงเสียบได้ไม่จำกัด</label>
+  <div class="fb info hide" id="f2"></div>
+</section>
+
+<section class="card" id="q3">
+  <h2>ข้อ 3 · วิเคราะห์วงจร (2 คะแนน)</h2>
+  <p>จากวงจรอนุกรมในภาพ (แบตเตอรี่ 9 V, R1 = 100 Ω, R2 = 200 Ω) กระแสไฟฟ้าในวงจรมีค่าเท่าใด</p>
+  <div class="row"><input type="number" step="any" id="a3" placeholder="ค่าที่ได้"><select id="u3"><option value="1">A</option><option value="0.001">mA</option></select></div>
+  <div class="fb info hide" id="f3"></div>
+</section>
+
+<section class="card" id="q4">
+  <h2>ข้อ 4 · ทักษะการวัด (1 คะแนน)</h2>
+  <p>ทีมต้องการวัด “กระแส” ที่ไหลผ่าน R1 ด้วยมัลติมิเตอร์แบบดิจิทัล ควรทำอย่างไร</p>
+  <label class="opt"><input type="radio" name="q4" value="A"> ตั้งย่านวัดแรงดัน แล้วต่อมัลติมิเตอร์ขนานกับ R1</label>
+  <label class="opt"><input type="radio" name="q4" value="B"> ตั้งย่านวัดกระแส แล้วต่อมัลติมิเตอร์อนุกรมกับ R1 (ตัดวงจรแล้วให้กระแสผ่านเครื่องวัด)</label>
+  <label class="opt"><input type="radio" name="q4" value="C"> ตั้งย่านวัดความต้านทาน แล้วต่อขนานกับ R1 ขณะวงจรทำงาน</label>
+  <label class="opt"><input type="radio" name="q4" value="D"> ตั้งย่านวัดกระแส แล้วต่อขนานกับแบตเตอรี่</label>
+  <div class="fb info hide" id="f4"></div>
+</section>
+
+<section class="card" id="q5">
+  <h2>ข้อ 5 · ตัดสินใจโดยใช้หลักฐาน (3 คะแนน)</h2>
+  <p>ทีมอยากเสียบ <b>เครื่องบัดกรี 60 W เพิ่มอีก 6 เครื่อง</b> ในปลั๊กพ่วงตัวเดิม ท่านเห็นว่าควรทำหรือไม่ จงตัดสินใจและอธิบายเหตุผล โดยใช้ข้อมูลหรือการคำนวณอย่างน้อย 2 อย่าง และเสนอข้อควรพิจารณาด้านความปลอดภัย</p>
+  <textarea id="a5" rows="6" placeholder="เขียนคำตอบของท่าน..."></textarea>
+  <div class="fb info hide" id="f5"></div>
+</section>
+
+<p><button id="submit">ส่งคำตอบ</button></p>
+</div>
+
+<section class="card hide" id="result">
+  <h2>ผลการสอบ</h2>
+  <div class="score" id="total"></div>
+  <p class="mut" id="who"></p>
+  <label class="mut">คะแนนข้อ 5 (0–3) ให้โดยครู หรือประเมินตนเองตามเกณฑ์ด้านบน</label>
+  <select id="s5"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+  <p class="mut">สรุปสำหรับส่งครู (คัดลอกข้อความนี้)</p>
+  <textarea id="sum" rows="9" readonly></textarea>
+</section>
+</div>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+var left=1800,tm=null,done=false,sc={q1:0,q2:0,q3:0,q4:0};
+function tick(){left--;var m=Math.floor(left/60),s=left%60;$('timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;if(left<=0){submit()}}
+$('start').onclick=function(){$('intro').classList.add('hide');$('exam').classList.remove('hide');tm=setInterval(tick,1000);window.scrollTo(0,0)};
+function show(id,cls,html){var e=$(id);e.className='fb '+cls;e.innerHTML=html}
+function radio(n){var r=document.querySelector('input[name='+n+']:checked');return r?r.value:''}
+function submit(){
+  if(done)return;done=true;clearInterval(tm);
+  var a1=parseFloat($('a1').value),I=240/220;
+  if(!isNaN(a1)&&Math.abs(a1-I)<=0.03){sc.q1=2}else if(!isNaN(a1)&&Math.abs(a1-I)<=0.2){sc.q1=1}
+  show('f1',sc.q1==2?'ok':'no','<b>เฉลย:</b> กำลังรวม = 110+30+60+40 = 240 W · I = P/V = 240/220 ≈ <b>1.09 A</b><br>คะแนน '+sc.q1+'/2');
+  sc.q2=radio('q2')=='B'?1:0;
+  show('f2',sc.q2?'ok':'no','<b>เฉลย: ข้อ B</b> ฟิวส์ 5 A ที่ 220 V รับได้ประมาณ 5×220 = 1,100 W ค่าปัจจุบันเป็นเพียง 240 W ยังเพิ่มได้ แต่ไม่ใช่ไม่จำกัด · คะแนน '+sc.q2+'/1');
+  var v=parseFloat($('a3').value)*parseFloat($('u3').value);
+  sc.q3=(!isNaN(v)&&Math.abs(v-0.03)<0.0005)?2:0;
+  show('f3',sc.q3?'ok':'no','<b>เฉลย:</b> R รวม = 100+200 = 300 Ω · I = V/R = 9/300 = <b>0.03 A = 30 mA</b> · คะแนน '+sc.q3+'/2');
+  sc.q4=radio('q4')=='B'?1:0;
+  show('f4',sc.q4?'ok':'no','<b>เฉลย: ข้อ B</b> การวัดกระแสต้องต่อมัลติมิเตอร์<u>อนุกรม</u>ในวงจร ส่วนการวัดแรงดันจึงต่อขนาน · คะแนน '+sc.q4+'/1');
+  show('f5','info','<b>แนวเฉลย (คำตอบตัดสินใจได้ทั้งสองทาง หากมีเหตุผลและหลักฐาน)</b><br>กำลังรวมใหม่ = 240 + 6×60 = 600 W → I = 600/220 ≈ 2.73 A ซึ่งยังต่ำกว่าฟิวส์ 5 A (1,100 W) แต่ควรพิจารณาเพิ่มเติม เช่น ปลั๊กและสายต้องรองรับกระแสได้จริง ความร้อนของเครื่องบัดกรี การเสียบหลายอุปกรณ์ในจุดเดียว สายดิน/เบรกเกอร์ และการกระจายไปหลายปลั๊ก<br><b>เกณฑ์:</b> 3 = คำนวณถูก + เทียบกับฟิวส์ + ข้อควรพิจารณาความปลอดภัยอย่างน้อย 1 ข้อ พร้อมเหตุผล · 2 = มีองค์ประกอบ 2 จาก 3 · 1 = มีเพียงการตัดสินใจหรือการคำนวณบางส่วน · 0 = ไม่เกี่ยวข้อง/ไม่มีเหตุผล');
+  $('result').classList.remove('hide');$('submit').disabled=true;$('submit').classList.add('hide');
+  $('s5').onchange=sum;sum();$('result').scrollIntoView();
+}
+function sum(){
+  var auto=sc.q1+sc.q2+sc.q3+sc.q4,s5=parseInt($('s5').value,10),t=auto+s5;
+  $('total').textContent=t+' / 9 คะแนน';
+  var n=$('nm').value||'-',no=$('no').value||'-';
+  $('who').textContent=n+' · '+no;
+  $('sum').value='ชื่อ: '+n+'\nเลขที่/ห้อง: '+no+'\nข้อ1: '+sc.q1+'/2\nข้อ2: '+sc.q2+'/1\nข้อ3: '+sc.q3+'/2\nข้อ4: '+sc.q4+'/1\nข้อ5 (ตามที่เลือก): '+s5+'/3\nรวม: '+t+'/9\n\nคำตอบข้อ 5:\n'+$('a5').value;
+}
+$('submit').onclick=submit;
+</script>
+</body>
+</html>
